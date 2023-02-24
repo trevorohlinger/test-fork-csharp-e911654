@@ -1,0 +1,65 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: csharp-ingress
+  labels:
+    app: csharp
+    backstage.io/kubernetes-id: csharp 
+spec:
+  rules:
+    - host: api-csharp-anderson-dev.empcbr.thoughtworks-labs.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: csharp
+                port: 
+                  number: 80
+  tls:
+  - hosts:
+    - api-csharp-anderson-dev.empcbr.thoughtworks-labs.net
+    secretName: letencryptkey
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: csharp
+  labels:
+    app: csharp
+    backstage.io/kubernetes-id: csharp
+spec:
+  ports:
+  - port: 80
+    targetPort: 5000
+  selector:
+    app: csharp
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: csharp
+  labels:
+    app: csharp
+    backstage.io/kubernetes-id: csharp
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 5
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: csharp
+  template:
+    metadata:
+      labels:
+        app: csharp
+    spec:
+      containers:
+      - name: csharp
+        image: 626109959667.dkr.ecr.us-east-1.amazonaws.com/csharp:{image-tag}
+        ports:
+        - containerPort: 5000

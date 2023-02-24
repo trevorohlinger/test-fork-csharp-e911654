@@ -1,0 +1,22 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: "csharp"
+  description: "csharp"
+  links:
+    - url: https://api-csharp-anderson-dev.empcbr.thoughtworks-labs.net/swagger
+      title: csharp
+      icon: dashboard
+  annotations:
+    circleci.com/project-slug: github/platform-dx/csharp-e911654
+    backstage.io/techdocs-ref: dir:.
+    github.com/project-slug:  platform-dx/csharp-e911654
+    sonarqube.org/project-key: "csharp"
+    backstage.io/kubernetes-label-selector: "app=csharp"
+    backstage.io/adr-location: docs/adrs/
+spec:
+  type: service
+  lifecycle: experimental
+  owner: "anderson"
+  providesApis:
+    - "csharp"

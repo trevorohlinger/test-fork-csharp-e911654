@@ -1,0 +1,8 @@
+site_name: "csharp"
+site_description: "csharp"
+
+nav:
+  - Introduction: index.md
+
+plugins:
+  - techdocs-core
